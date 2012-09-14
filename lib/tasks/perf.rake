@@ -19,7 +19,7 @@ namespace :perf do
   end
 
   # These are your stress servers' internal IP addresses. These IPs will be passed to JMeter.
-  STRESS_SERVERS_INTERNAL = ['172.16.150.84', '172.16.150.85', '172.16.150.86', '172.16.150.87'].join(',')
+  STRESS_SERVERS_INTERNAL = ['123.6.1.84', '123.6.1.85', '123.6.1.86', '123.6.1.87'].join(',')
 
   task :test_run, :test, :test_type do |t, args|
     timestamp = Time.now.strftime '%Y%m%d_%H%M%S'
