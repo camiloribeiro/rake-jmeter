@@ -1,6 +1,2 @@
-tmp
 *.swp
 jmeter*.log
-*.png
-.bundle
-.config
