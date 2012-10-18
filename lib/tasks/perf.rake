@@ -3,7 +3,7 @@ namespace :perf do
     @tests.each do |test, types|
     types.each do |type|
       desc "#{test} #{type} load test"
-      task "#{test}:#{type}" => ['sync:run', 'version:print'] do
+      task "#{test}:#{type}" => ['sync:run'] do
         Rake::Task['perf:test_run'].invoke test, type
       end
     end
