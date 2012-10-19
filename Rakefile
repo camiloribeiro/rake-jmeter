@@ -1,6 +1,6 @@
-Dir[File.dirname(__FILE__) + "/config/*.rb"].each do |file|
-  require file 
-end
+require "./config/env_config" 
+require "./config/test_config" 
+require "./config/config_helper" 
 require "bundler/setup"
 Bundler.require
 
