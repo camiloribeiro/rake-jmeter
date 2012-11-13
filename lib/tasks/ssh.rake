@@ -16,6 +16,7 @@ namespace :ssh do
     `echo "ServerAliveInterval 300\nServerAliveCountMax 3" >> ~/.ssh/config`
 
 
+
     STRESS_SERVERS_EXTERNAL.each do |server|
       if server.port
         puts "Add #{server.name} alias to local machine"
@@ -29,6 +30,17 @@ namespace :ssh do
         `ssh -C #{server.user}@#{server.host} 'echo "#{@key}" >> ~/.ssh/authorized_keys'` 
         puts "key included with success"
       end
+    end
+  end
+
+  desc 'Install java in all server'
+  task :install_java do
+    STRESS_SERVERS_EXTERNAL.each do |server|
+      puts "Updating apt-get to #{server.name}"
+      `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get -y update'`
+      puts "Instaling java jdk 6 to  #{server.name}"
+      `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get --yes --force-yes install default-jdk --fix-missing'`
+      puts "Sucessed installed java jdk 6 to  #{server.name}"
     end
   end
 end
