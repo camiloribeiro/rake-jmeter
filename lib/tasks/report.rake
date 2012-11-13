@@ -142,14 +142,7 @@ MKD
 
       md << [
         summary['sampler_label'],
-
-
-        print_line(summary['aggregate_report_count'], "<", @min_samplers)
-
-        sprintf("#{if(summary['aggregate_report_count'] < @min_samplers) ; desc_issue(@min_samplers, 
-                                                                                    (summary['aggregate_report_count']), "Number of samplers", summary['sampler_label']); '<b>%d</b>' else '%d' end}",  
-                                                                                    summary['aggregate_report_count']),
-
+        sprintf("#{if(summary['aggregate_report_count'] < @min_samplers) ; desc_issue(@min_samplers, (summary['aggregate_report_count']), "Number of samplers", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_count']),
         sprintf("#{if(summary['average'] > @max_avg_time) ; desc_issue(@max_avg_time, (summary['average']), "Average", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['average']),
         sprintf("#{if(summary['aggregate_report_median'] > @max_median) ; desc_issue(@max_median, (summary['aggregate_report_median']), "Menian", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_median']),
         sprintf("#{if((summary['standard_deviation']) > @max_standard_deviation) ; desc_issue(@max_standard_deviation, (summary['standard_deviation']), "Standard Deviation", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['standard_deviation']),
@@ -225,19 +218,6 @@ MKD
       f.write '</div></body></html>'
     end
   end
-
-  
-  def print_line(real_result, operator, expected_result, label)
-        line = ""
-        if(real_result operator expected_result)
-           desc_issue(expected_result, (summary['average']), label, summary['sampler_label']})
-           line = '<b>%d</b>'
-        else 
-          line = '%d' 
-        end  
-        line += "#{summary['average']}),"
-  end
-
 
   def jmeter_cmd(options)
     jtl = options.delete :jtl
