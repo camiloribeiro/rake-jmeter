@@ -1,3 +1,4 @@
 *.swp
 jmeter*.logt
 *.swo
+jmeter.log
