@@ -40,7 +40,20 @@ namespace :ssh do
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get -y update'`
       puts "Instaling java jdk 6 to  #{server.name}"
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get --yes --force-yes install default-jdk --fix-missing'`
-      puts "Sucessed installed java jdk 6 to  #{server.name}"
+      puts "Done for  #{server.name}"
     end
+  end
+
+  desc 'Sync internal servers'
+  task :internal_network do
+      puts "Rubying on #{MASTER.name}"
+      `ssh -C -p #{MASTER.port} #{MASTER.user}@#{MASTER.host} 'sudo apt-get --yes --force-yes install ruby'`
+      puts "Gem install bundle on #{MASTER.name}"
+      `ssh -C -p #{MASTER.port} #{MASTER.user}@#{MASTER.host} "cd #{@project_dir}/ && sudo gem install bundler"`
+      puts "Bundling on #{MASTER.name}"
+      `ssh -C -p #{MASTER.port} #{MASTER.user}@#{MASTER.host} 'bundle install'`
+      puts "Adding Keys for internal servers on #{MASTER.name}"
+      `ssh -C -p #{MASTER.port} #{MASTER.user}@#{MASTER.host} 'rake ssh:add_key'`
+      puts "Done for #{MASTER.name}"
   end
 end
