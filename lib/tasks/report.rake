@@ -76,7 +76,7 @@ namespace :report do
     file = File.expand_path args.file
     raise "#{file} does not exist!" unless File.exists?(file)
 
-    data = FasterCSV.read(file, :headers => true, :converters => [:numeric]).map &:to_hash
+    data = CSV.read(file, :headers => true, :converters => [:numeric]).map &:to_hash
 
     open(File.expand_path(File.join(File.dirname(file), 'PercentileBelowThreshold.csv')), 'w') do |f|
       f.puts 'Transaction,s05,2s,4s,6s,8s'
@@ -118,9 +118,9 @@ namespace :report do
     out_dir = args.out_dir
     raise "#{out_dir} does not exist!" unless File.exists?(out_dir)
 
-    percentiles_below_threshold = FasterCSV.read(File.join(out_dir, 'PercentileBelowThreshold.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
-    aggregate = FasterCSV.read(File.join(out_dir, 'AggregateReport.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
-    st_deviation = FasterCSV.read(File.join(out_dir, 'StandardDeviationReport.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
+    percentiles_below_threshold = CSV.read(File.join(out_dir, 'PercentileBelowThreshold.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
+    aggregate = CSV.read(File.join(out_dir, 'AggregateReport.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
+    st_deviation = CSV.read(File.join(out_dir, 'StandardDeviationReport.csv'), :headers => true, :converters => [:numeric]).map &:to_hash
     tstamp = Time.parse(DateTime.parse(File.basename(out_dir).split(/_/)[-2,2].join).to_s)
 
     md = <<-MKD
