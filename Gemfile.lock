@@ -2,7 +2,6 @@ GEM
   remote: http://rubygems.org/
   specs:
     coderay (1.0.7)
-    fastercsv (1.5.5)
     method_source (0.8)
     pry (0.9.10)
       coderay (~> 1.0.5)
@@ -16,7 +15,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fastercsv
   pry
   rake
   redcarpet
