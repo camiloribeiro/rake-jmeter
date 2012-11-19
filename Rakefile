@@ -2,6 +2,8 @@ require "./config/env_config"
 require "./config/test_config" 
 require "./config/config_helper" 
 require "bundler/setup"
+require "csv"
+
 Bundler.require
 
 TARGET_HOST = "foo"
