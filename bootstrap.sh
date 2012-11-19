@@ -9,4 +9,4 @@ rake ssh:install_java
 rake ssh:setup_master
 rake ssh:internal_network_config
 rake ssh:internal_network_hosts
-
+rake perf:sample:nominal
