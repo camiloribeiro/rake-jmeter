@@ -21,6 +21,7 @@ namespace :ssh do
 
       puts "Accessing #{server.host} using user #{server.user} at port #{server.port}"
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'echo "#{@key}" >> ~/.ssh/authorized_keys'` 
+      `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo bash -c "echo '#{server.host} #{server.name} quantal64' > /etc/hosts"'`
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'echo "key included with success"'`
     end
   end
