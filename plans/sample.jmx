@@ -44,8 +44,8 @@
 without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
 without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(100,1000)}</stringProp>
-          <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(15000)}</stringProp>
+          <stringProp name="LATENCY">${__Random(10000)}</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree/>
       </hashTree>
