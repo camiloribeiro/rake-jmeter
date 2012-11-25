@@ -9,5 +9,4 @@ vagrant up vagrant02
 rake ssh:add_keys       
 rake ssh:install_java
 rake ssh:setup_master
-rake perf:sample:nominal
 rake test:all
