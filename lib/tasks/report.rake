@@ -31,7 +31,7 @@ task :report, :jtl do |t, args|
   Rake::Task['report:st_deviation'].invoke jtl, out_dir
   Rake::Task['report:summary'].invoke out_dir
   Rake::Task['report:pngs'].invoke jtl, out_dir
-  Rake::Task['report:return_console'].invoke
+  Rake::Task['report:return_console'].invoke out_dir
 end
 
 namespace :report do
@@ -94,7 +94,8 @@ namespace :report do
     end
   end
 
-  task 'return_console' do
+  task 'return_console', :out_dir do |t, args|
+   puts ("file://" + args.out_dir + "/Summary.html")
    puts true if @issues.size == 0
   end
 
