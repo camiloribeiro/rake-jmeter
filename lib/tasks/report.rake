@@ -96,7 +96,8 @@ namespace :report do
 
   task 'return_console', :out_dir do |t, args|
    puts ("file://" + args.out_dir + "/Summary.html")
-   puts true if @issues.size == 0
+   puts 0 if @issues.size == 0
+   puts "ERROR, see report" if @issues.size != 0
   end
 
   def link_to_newrelic_server(account_id, id, tstamp)

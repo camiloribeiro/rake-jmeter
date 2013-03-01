@@ -37,9 +37,9 @@ namespace :perf do
       end
     end
 
+    Rake::Task['servers:stop'].invoke
     File.exists?(log) or raise "Log file #{log} not found."
-
     Rake::Task[:report].invoke log unless ENV['DRY']
-  end
 
+  end
 end

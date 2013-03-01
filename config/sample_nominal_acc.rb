@@ -30,7 +30,7 @@
 @max_throughput = 5
 
 #MIN samplers
-@min_samplers = 150
+@min_samplers = 50
 
 #max 90$
 @max_90 = 2000
