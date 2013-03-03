@@ -2,7 +2,7 @@ namespace :ssh do
   task :check do
     config = File.expand_path '~/.ssh/config'
     File.exists?(config) or raise "Could not find #{config} file"
-    File.read(config) =~ /stress0\d/ or Rake::Task['ssh:help'].invoke
+#    File.read(config) =~ /stress0\d/ or Rake::Task['ssh:help'].invoke
   end
 
   desc 'Add keys'
@@ -23,17 +23,6 @@ namespace :ssh do
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'echo "#{@key}" >> ~/.ssh/authorized_keys'` 
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo bash -c "echo '#{server.host} #{server.name} quantal64' > /etc/hosts"'`
       `ssh -C -p #{server.port} #{server.user}@#{server.host} 'echo "key included with success"'`
-    end
-  end
-
-  desc 'Install java in all server'
-  task :install_java do
-    STRESS_SERVERS_EXTERNAL.each do |server|
-      puts "Updating apt-get to #{server.name}"
-      `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get -y update'`
-      puts "Instaling java jdk 6 to  #{server.name}"
-      `ssh -C -p #{server.port} #{server.user}@#{server.host} 'sudo apt-get --yes --force-yes install default-jdk --fix-missing'`
-      puts "Done for  #{server.name}"
     end
   end
 

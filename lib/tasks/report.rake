@@ -31,7 +31,6 @@ task :report, :jtl do |t, args|
   Rake::Task['report:st_deviation'].invoke jtl, out_dir
   Rake::Task['report:summary'].invoke out_dir
   Rake::Task['report:pngs'].invoke jtl, out_dir
-  Rake::Task['report:return_console'].invoke out_dir
 end
 
 namespace :report do
@@ -92,12 +91,6 @@ namespace :report do
       end
       f.puts ['TOTAL', *totals].join(',')
     end
-  end
-
-  task 'return_console', :out_dir do |t, args|
-   puts ("file://" + args.out_dir + "/Summary.html")
-   puts 0 if @issues.size == 0
-   puts "ERROR, see report" if @issues.size != 0
   end
 
   def link_to_newrelic_server(account_id, id, tstamp)

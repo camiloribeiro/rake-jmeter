@@ -1,4 +1,10 @@
 Vagrant::Config.run do |config|                                                                                                                                                  
+
+  config.vm.provision :puppet, :module_path => "puppet/modules/vendors" do |puppet|
+    puppet.manifests_path = "puppet"
+    puppet.manifest_file = "init.pp"
+  end
+
   config.vm.define :vagrant01 do |config|
     config.vm.box =  "quantal64"
     config.vm.forward_port 3005, 3005
