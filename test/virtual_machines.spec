@@ -41,7 +41,7 @@ describe "Rake Jmeter" do
   end
   context "Running and reporting" do
     it "has a report assertion ok" do
-      `rake perf:sample:nominal`
+      system("bundle exec rake perf:sample:nominal")
     end
   end
 end

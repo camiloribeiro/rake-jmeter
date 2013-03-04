@@ -3,6 +3,7 @@ require "./config/test_config"
 require "./config/config_helper" 
 require "bundler/setup"
 require "csv"
+require 'launchy'
 
 Bundler.require
 

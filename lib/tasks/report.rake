@@ -31,9 +31,38 @@ task :report, :jtl do |t, args|
   Rake::Task['report:st_deviation'].invoke jtl, out_dir
   Rake::Task['report:summary'].invoke out_dir
   Rake::Task['report:pngs'].invoke jtl, out_dir
+  Rake::Task['report:return_console'].invoke out_dir
 end
 
 namespace :report do
+
+#  desc 'Generates a partial report from a incomplete (without </testResults>) JTL file'
+#  task :partial_report do
+#    puts "Cleaning"
+#    Dir['logs/*'].each {|f| FileUtils.rm f}
+#    puts "clean: #{Dir['logs/*']}"
+#    sh %[scp -C #{MASTER.name}:~/#{@project_dir}/logs/*.jtl ./logs/]
+#
+#    partial_report_name = Dir['./logs/*.jtl'].detect {|f| ! (f =~ /error/)}
+#    partial_report = File.read(partial_report_name)
+#    unless partial_report =~ /<\/testResults>/
+#      File.open(partial_report_name, "a") do |f|
+#      f << "</testResults>"
+#      end
+#    end
+#
+#    partial_error_report_name = Dir['./logs/*.jtl'].detect {|f| (f =~ /error/)}
+#    puts partial_error_report_name
+#    partial_error_report = File.read(partial_error_report_name)
+#    unless partial_error_report =~ /<\/testResults>/
+#      File.open(partial_error_report_name, "a") do |f|
+#      f << "</testResults>"
+#      end
+#    end
+#
+#    at_exit { Launchy.open "reports/#{File.basename(partial_report_name, '.jtl')}/Summary.html" }
+##    Rake::Task[:report].invoke partial_report_name
+#  end
 
   task :pngs, :jtl, :out_dir do |t, args|
     REPORTS.each do |report|
@@ -53,6 +82,13 @@ namespace :report do
       :report_type => :csv,
       :out_dir => File.expand_path(args.out_dir),
       :aggregate => false
+  end
+
+  task 'return_console', :out_dir do |t, args|
+    puts (  "#{args.out_dir}/Summary.html")
+    Launchy.open "#{args.out_dir}/Summary.html" 
+    puts 0 if @issues.size == 0
+    puts "ERROR, see report" if @issues.size != 0
   end
 
   task :st_deviation, :jtl, :out_dir do |t, args|
