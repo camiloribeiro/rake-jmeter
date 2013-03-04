@@ -2,3 +2,4 @@
 jmeter*.logt
 *.swo
 jmeter.log
+.vagrant
