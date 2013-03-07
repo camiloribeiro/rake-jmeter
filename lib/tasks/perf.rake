@@ -1,15 +1,6 @@
 namespace :perf do
 
-  {
-    # Define your tests and test types here!
-    #
-    # This will look for a plans/sample.jmx file and config/sample_{nominal,peak}.properties files.
-    #
-    # Output will be generated in logs/sample_{nominal,peak}_YYYYMMDD_HHMMSS.jtl and
-    # reports/sample_{nominal,peak}_YYYYMMDD_HHMMSS.
-    #
-    'sample' => [:nominal, :peak],
-  }.each do |test, types|
+    @tests.each do |test, types|
     types.each do |type|
       desc "#{test} #{type} load test"
       task "#{test}:#{type}" => ['sync:run'] do
@@ -18,13 +9,10 @@ namespace :perf do
     end
   end
 
-  # These are your stress servers' internal IP addresses. These IPs will be passed to JMeter.
-  STRESS_SERVERS_INTERNAL = ['172.16.150.84', '172.16.150.85', '172.16.150.86', '172.16.150.87'].join(',')
-
   task :test_run, :test, :test_type do |t, args|
     timestamp = Time.now.strftime '%Y%m%d_%H%M%S'
 
-    properties = File.join 'config', "#{args.test}_#{args.test_type}.properties"
+    properties = File.join 'schedule', "#{args.test}_#{args.test_type}.properties"
     log = File.join 'logs', "#{args.test}_#{args.test_type}_#{timestamp}.jtl"
     plan = File.join 'plans', "#{args.test}.jmx"
     FileUtils.mkdir_p File.dirname(log)
@@ -37,9 +25,10 @@ namespace :perf do
     puts "[INFO][#{Time.now.to_i}] Servers restarted"
 
     cmds = []
-    jmeter = "~/#{PROJECT_NAME}/jmeter/2.7/bin/jmeter"
-    cmds << %[ssh -C #{MASTER} 'rm -rf ~/#{PROJECT_NAME}/logs/* && #{jmeter} -n -p ~/#{PROJECT_NAME}/#{properties} -t ~/#{PROJECT_NAME}/#{plan} -l ~/#{PROJECT_NAME}/#{log} -R #{STRESS_SERVERS_INTERNAL}']
-    cmds << %[scp -C #{MASTER}:~/#{PROJECT_NAME}/#{log} ./#{log}]
+    jmeter = "~/#{@project_dir}/jmeter/2.7/libexec/bin/jmeter"
+
+    cmds << %[ssh -C #{MASTER.name} "rm -rf ~/#{@project_dir}/logs/* && #{jmeter} -n -p ~/#{@project_dir}/#{properties} -t ~/#{@project_dir}/#{plan} -l ~/#{@project_dir}/#{log} -R #{STRESS_SERVERS_INTERNAL.map {|a| a.host}.join(',')}"]
+    cmds << %[scp -C #{MASTER.name}:~/#{@project_dir}/#{log} ./#{log}]
     cmds.each do |cmd|
       if ENV['DRY']
         puts cmd
@@ -48,9 +37,9 @@ namespace :perf do
       end
     end
 
+    Rake::Task['servers:stop'].invoke
     File.exists?(log) or raise "Log file #{log} not found."
-
     Rake::Task[:report].invoke log unless ENV['DRY']
-  end
 
+  end
 end
