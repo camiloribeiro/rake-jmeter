@@ -1,6 +1,9 @@
 source :rubygems
 
 gem 'rake'
-gem 'fastercsv'
 gem 'pry'
 gem 'redcarpet'
+gem 'vagrant'
+gem 'rspec'
+gem 'pry'
+gem 'launchy'
