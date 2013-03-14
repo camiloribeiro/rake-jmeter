@@ -31,7 +31,7 @@ task :report, :jtl do |t, args|
   Rake::Task['report:st_deviation'].invoke jtl, out_dir
   Rake::Task['report:summary'].invoke out_dir
   Rake::Task['report:pngs'].invoke jtl, out_dir
-  Rake::Task['report:return_console'].invoke out_dir
+#  Rake::Task['report:return_console'].invoke out_dir
 end
 
 namespace :report do
@@ -86,9 +86,10 @@ namespace :report do
 
   task 'return_console', :out_dir do |t, args|
     puts (  "#{args.out_dir}/Summary.html")
-    Launchy.open "#{args.out_dir}/Summary.html" 
-    puts 0 if @issues.size == 0
-    puts "ERROR, see report" if @issues.size != 0
+   # Launchy.open "#{args.out_dir}/Summary.html" 
+   # puts 0 if @issues.size == 0
+   # puts "ERROR, see report" if @issues.size != 0
+  puts 0
   end
 
   task :st_deviation, :jtl, :out_dir do |t, args|
@@ -173,7 +174,7 @@ MKD
 
       md << [
         summary['sampler_label'],
-        sprintf("#{if(summary['aggregate_report_count'] < @min_samplers) ; desc_issue(@min_samplers, (summary['aggregate_report_count']), "Number of samplers", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_count']),
+        sprintf("#{aggregate_report_line(summary)}"),
         sprintf("#{if(summary['average'] > @max_avg_time) ; desc_issue(@max_avg_time, (summary['average']), "Average", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['average']),
         sprintf("#{if(summary['aggregate_report_median'] > @max_median) ; desc_issue(@max_median, (summary['aggregate_report_median']), "Menian", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_median']),
         sprintf("#{if((summary['standard_deviation']) > @max_standard_deviation) ; desc_issue(@max_standard_deviation, (summary['standard_deviation']), "Standard Deviation", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['standard_deviation']),
@@ -271,4 +272,16 @@ MKD
         #{"--height #{height}" if height}
     CMD
   end
+
+  def aggregate_report_line(summary) 
+      if summary['aggregate_report_count'] < @min_samplers  
+        desc_issue(@min_samplers, (summary['aggregate_report_count']), "Number of samplers", summary['sampler_label']) 
+        "<b>#{summary['aggregate_report_count']}</b>"
+      else 
+        summary['aggregate_report_count'].to_s
+      end
+  end
 end
+
+
+
