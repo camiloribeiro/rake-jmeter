@@ -175,8 +175,8 @@ MKD
       md << [
         summary['sampler_label'],
         sprintf("#{aggregate_report_line(summary)}"),
-        sprintf("#{if(summary['average'] > @max_avg_time) ; desc_issue(@max_avg_time, (summary['average']), "Average", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['average']),
-        sprintf("#{if(summary['aggregate_report_median'] > @max_median) ; desc_issue(@max_median, (summary['aggregate_report_median']), "Menian", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_median']),
+        sprintf("#{average_report_line(summary)}"),
+        sprintf("#{median_report_line(summary)}"),
         sprintf("#{if((summary['standard_deviation']) > @max_standard_deviation) ; desc_issue(@max_standard_deviation, (summary['standard_deviation']), "Standard Deviation", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['standard_deviation']),
         sprintf("#{if((summary['standard_deviation'] / summary['aggregate_report_max'] * 100) > @max_percentil_deviation) ; desc_issue(@max_percentil_deviation, (summary['standard_deviation'] / summary['aggregate_report_max'] * 100), "% Deviation", summary['sampler_label']); '<b>%.2f</b>' else '%.2f' end}", (summary['standard_deviation'] * 100 / summary['aggregate_report_max'])),
         sprintf("#{if(summary['aggregate_report_min'] >@max_min_time) ; desc_issue(@max_min_time, (summary['aggregate_report_min']), "Max Min", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_min']),
@@ -279,6 +279,24 @@ MKD
         "<b>#{summary['aggregate_report_count']}</b>"
       else 
         summary['aggregate_report_count'].to_s
+      end
+  end
+
+  def average_report_line(summary) 
+      if summary['average'] > @max_avg_time
+        desc_issue(@max_avg_time, (summary['average']), "Average", summary['sampler_label']) 
+        "<b>#{summary['average']}</b>"
+      else 
+        summary['average'].to_s
+      end
+  end
+
+  def median_report_line(summary) 
+      if summary['aggregate_report_median'] > @max_avg_time
+        desc_issue(@max_avg_time, (summary['aggregate_report_median']), "Median", summary['sampler_label']) 
+        "<b>#{summary['aggregate_report_median']}</b>"
+      else 
+        summary['aggregate_report_median'].to_s
       end
   end
 end
