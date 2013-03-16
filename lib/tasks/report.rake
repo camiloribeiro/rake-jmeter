@@ -165,8 +165,8 @@ namespace :report do
 
 Result Table:
 
-Page|Requests|AVG|Median|Standard Deviation|% Deviation|Minimum|90%|Maximum|Throughput \/ sec|% error|% < 500ms|% < 2s|% < 4s|% < 6s|% < 8s
-------|-------------|-----|-------|---------|--------|------|---|------|-----|------|------|------|------|------|------
+Page|Requests|AVG|Median|Std Deviation|% Deviation|Minimum|90%|Maximum|Throughput|% error|% < 500ms|% < 2s|% < 4s|% < 6s|% < 8s
+----|--------|---|------|------------------|-----------|-------|---|-------|------------------|-------|---------|------|------|------|------
 MKD
     aggregate.each do |agg|
       summary = agg.merge(percentiles_below_threshold.find {|pbt| pbt['Transaction'] == agg['sampler_label']} || {})
@@ -178,17 +178,17 @@ MKD
         average_report_line(summary),
         median_report_line(summary),
         stdeviation_report_line(summary),
-        sprintf("#{if((summary['standard_deviation'] / summary['aggregate_report_max'] * 100) > @max_percentil_deviation) ; desc_issue(@max_percentil_deviation, (summary['standard_deviation'] / summary['aggregate_report_max'] * 100), "% Deviation", summary['sampler_label']); '<b>%.2f</b>' else '%.2f' end}", (summary['standard_deviation'] * 100 / summary['aggregate_report_max'])),
-        sprintf("#{if(summary['aggregate_report_min'] >@max_min_time) ; desc_issue(@max_min_time, (summary['aggregate_report_min']), "Max Min", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_min']),
-        sprintf("#{if(summary['aggregate_report_90%_line'] >@max_90) ; desc_issue(@max_90, (summary['aggregate_report_90%_line']), "90%", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_90%_line']),
-        sprintf("#{if(summary['aggregate_report_max'] >@max_max_time) ; desc_issue(@max_max_time, (summary['aggregate_report_max']), "Max Maximum Response Time", summary['sampler_label']); '<b>%d</b>' else '%d' end}",   summary['aggregate_report_max']),
-        sprintf("#{if(summary['aggregate_report_rate']<@max_throughput) ; desc_issue(@max_throughput, (summary['aggregate_report_rate']), "Min Throughput", summary['sampler_label']); '<b>%.2f</b>' else '%.2f' end}", summary['aggregate_report_rate']),
-        sprintf("#{if((summary['aggregate_report_error%'].to_f * 100)> @max_error_rate) ; desc_issue(@max_error_rate, (summary['aggregator_report_error%'].to_f * 100), "Error Rate", summary['sampler_label']); '<b>%.2f</b>' else '%.2f' end}", summary['aggregate_report_error%'].to_f * 100),
-        sprintf("#{if((summary['s05'].to_f * 100) < @min_response_time_under_500ms) ; desc_issue(@min_response_time_under_500ms, (summary['s05'].to_f * 100), "Under 0.5s", summary['sampler_label']); '<b>%.1f</b>'; else '%.1f' end}", summary['s05'].to_f * 100),
-        sprintf("#{if((summary['2s'].to_f * 100) < @min_response_time_under_2s) ; desc_issue(@min_response_time_under_2s, (summary['2s'].to_f * 100), "Under 2s", summary['sampler_label']); '<b>%.1f</b>' else '%.1f' end}", summary['2s'].to_f * 100),
-        sprintf("#{if((summary['4s'].to_f * 100) < @min_response_time_under_4s) ; desc_issue(@min_response_time_under_4s, (summary['4s'].to_f * 100), "Under 4s", summary['sampler_label']); '<b>%.1f</b>' else '%.1f' end}", summary['4s'].to_f * 100),
-        sprintf("#{if((summary['6s'].to_f * 100) < @min_response_time_under_6s) ; desc_issue(@min_response_time_under_6s, (summary['6s'].to_f * 100), "Under 6s", summary['sampler_label']); '<b>%.1f</b>' else '%.1f' end}", summary['6s'].to_f * 100),
-        sprintf("#{if((summary['8s'].to_f * 100) < @min_response_time_under_8s) ; desc_issue(@min_response_time_under_8s, (summary['8s'].to_f * 100), "Under 8s", summary['sampler_label']); '<b>%.1f</b>' else '%.1f' end}", summary['8s'].to_f * 100),
+        percent_deviation_report_line(summary),
+        max_min_report_line(summary),
+        percentil_report_line(summary),
+        max_max_report_line(summary),
+        throughput_report_line(summary),
+        error_rate_report_line(summary),
+        s05_report_line(summary),
+        s2_report_line(summary),
+        s4_report_line(summary),
+        s6_report_line(summary),
+        s8_report_line(summary),
       ].map {|s|  s}.join('|')
       md << "\n"
     end
@@ -243,7 +243,7 @@ MKD
       f.write '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>'
       f.write '<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/>'
       f.write "<style>h1,h2,h3,h4 { margin-bottom: .5em; margin-top: .5em; }</style><title>#{@project_name} - Performance Test Summary</title></head><body>"
-      f.write '<div class="container">'
+      f.write '<div>'
       f.write Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true, :autolink => true).render(md)
       f.write '<script>document.getElementsByTagName("table")[0].setAttribute("class", "table table-bordered table-striped")</script>'
       f.write '<script>document.getElementsByTagName("table")[1].setAttribute("class", "table table-bordered table-striped")</script>'
@@ -301,13 +301,128 @@ MKD
   end
 
   def stdeviation_report_line(summary) 
-      if summary['standard_deviation'] / 100 > @max_standard_deviation
-        desc_issue(@max_avg_time, (summary['standard_deviation']) / 100, "Std. Deviation", summary['sampler_label']) 
-        summary['standard_deviation'] / 100
+      if summary['standard_deviation'] > @max_standard_deviation
+        desc_issue(@max_avg_time, summary['standard_deviation'], "Std. Deviation", summary['sampler_label']) 
+        "<b>#{ "%.2f" % summary['standard_deviation']}</b>"
       else 
-        summary['standard_deviation'] / 100
+        "%.2f" % summary['standard_deviation']
       end
   end
+
+  def percent_deviation_report_line(summary) 
+      percentil_deviation =  ((summary['standard_deviation'] / summary['aggregate_report_max']) * 100)
+      if percentil_deviation > @max_percentil_deviation
+        desc_issue(@max_percentil_deviation, percentil_deviation, "% Deviation", summary['sampler_label']) 
+       "<b>#{ "%.2f" % percentil_deviation}</b>"
+      else 
+        "%.2f" % percentil_deviation
+      end
+  end
+
+  def max_min_report_line(summary) 
+      if summary["aggregate_report_min"] > @max_min_time
+        desc_issue(@max_min_time, summary["aggregate_report_min"], "Min Time", summary['sampler_label']) 
+        "<b>#{summary["aggregate_report_min"]}</b>"
+      else 
+        summary["aggregate_report_min"]
+      end
+  end
+
+  def max_max_report_line(summary) 
+      if summary["aggregate_report_max"] > @max_max_time
+        desc_issue(@max_max_time, summary["aggregate_report_min"], "Max Time", summary['sampler_label']) 
+        "<b>#{summary["aggregate_report_max"]}</b>"
+      else 
+        summary["aggregate_report_max"]
+      end
+  end
+
+  def percentil_report_line(summary) 
+      line90 = summary["aggregate_report_90%_line"]
+      if line90 > @max_90
+        desc_issue(@max_90, line90, "90% Line", summary['sampler_label']) 
+        "<b>#{line90}</b>"
+      else 
+        line90
+      end
+  end
+
+  def throughput_report_line(summary) 
+      throughput = ("%.2f" % summary["aggregate_report_rate"]).to_f
+      if throughput < @min_throughput
+        desc_issue(@min_throughput, throughput, "Min Throughtput", summary['sampler_label']) 
+        "<b>#{throughput}</b>"
+      else 
+        throughput
+      end
+  end
+
+  def error_rate_report_line(summary) 
+      error_rating = ("%.2f" %  (summary["aggregate_report_error%"] * 100)).to_f
+      if error_rating > @max_error_rate
+        desc_issue(@max_error_rate, error_rating, "% Error", summary['sampler_label']) 
+        "<b>#{error_rating}</b>"
+      else 
+        error_rating
+      end
+  end
+
+  def s05_report_line(summary) 
+     line_real = (summary["s05"] * 100)
+     line_expected = @min_response_time_under_500ms
+     if line_real < line_expected
+        desc_issue(line_expected, line_real, "Under 0.5s", summary['sampler_label']) 
+        "<b>#{ "%.2f" % line_real}</b>"
+      else 
+       line_real
+      end
+  end
+
+  def s2_report_line(summary) 
+     line_real = (summary["2s"] * 100 )
+     line_expected = @min_response_time_under_2s
+     if line_real < line_expected
+        desc_issue(line_expected, line_real, "Under 2s", summary['sampler_label']) 
+        "<b>#{ "%.2f" % line_real}</b>"
+      else 
+        line_real
+      end
+  end
+
+  def s4_report_line(summary) 
+     line_real = (summary["4s"] * 100 )
+     line_expected = @min_response_time_under_4s
+     if line_real < line_expected
+        desc_issue(line_expected, line_real, "Under 4s", summary['sampler_label']) 
+        "<b>#{ "%.2f" % line_real}</b>"
+      else 
+        line_real
+      end
+  end
+
+  def s6_report_line(summary) 
+     line_real = (summary["6s"] * 100)
+     line_expected = @min_response_time_under_6s
+     if line_real < line_expected
+        desc_issue(line_expected, line_real, "Under 6s", summary['sampler_label']) 
+        "<b>#{ "%.2f" % line_real}</b>"
+      else 
+        line_real
+      end
+  end
+
+  def s8_report_line(summary) 
+    #require "pry"; binding.pry
+     line_real = (summary["8s"] * 100)
+     line_expected = @min_response_time_under_8s
+     if line_real < line_expected
+        desc_issue(line_expected, line_real, "Under 8s", summary['sampler_label']) 
+        "<b>#{ "%.2f" % line_real}</b>"
+      else 
+       line_real
+      end
+  end
+
 end
 
 
