@@ -3,3 +3,6 @@ jmeter*.logt
 *.swo
 jmeter.log
 .vagrant
+logs/
+reports/
+.DS_Store
