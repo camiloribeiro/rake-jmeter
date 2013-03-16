@@ -274,66 +274,72 @@ MKD
   end
 
   def aggregate_report_line(summary) 
-      if summary['aggregate_report_count'] < @min_samplers  
-        desc_issue(@min_samplers, (summary['aggregate_report_count']), "Number of samplers", summary['sampler_label']) 
-        "<b>#{summary['aggregate_report_count']}</b>"
+      number_samples = summary['aggregate_report_count']
+      if number_samples < @min_samplers  
+        desc_issue(@min_samplers, number_samples, "Number of samplers", summary['sampler_label']) 
+        "<b>#{number_samples}</b>"
       else 
-        summary['aggregate_report_count'].to_s
+        number_samples
       end
   end
 
   def average_report_line(summary) 
-      if summary['average'] > @max_avg_time
-        desc_issue(@max_avg_time, (summary['average']), "Average", summary['sampler_label']) 
-        "<b>#{summary['average']}</b>"
+      avg = summary['average']
+      if avg > @max_avg_time
+        desc_issue(@max_avg_time, avg, "Average", summary['sampler_label']) 
+        "<b>#{avg}</b>"
       else 
-        summary['average'].to_s
+        avg
       end
   end
 
   def median_report_line(summary) 
-      if summary['aggregate_report_median'] > @max_median
-        desc_issue(@max_median, (summary['aggregate_report_median']), "Median", summary['sampler_label']) 
-        "<b>#{summary['aggregate_report_median']}</b>"
+      median = summary['aggregate_report_median']
+      if median > @max_median
+        desc_issue(@max_median, median, "Median", summary['sampler_label']) 
+        "<b>#{median}</b>"
       else 
-        summary['aggregate_report_median'].to_s
+        median
       end
   end
 
   def stdeviation_report_line(summary) 
-      if summary['standard_deviation'] > @max_standard_deviation
-        desc_issue(@max_avg_time, summary['standard_deviation'], "Std. Deviation", summary['sampler_label']) 
-        "<b>#{ "%.2f" % summary['standard_deviation']}</b>"
+      std_deviation = ( "%.2f" % summary['standard_deviation']).to_f
+      if std_deviation > @max_standard_deviation
+        desc_issue(@max_avg_time, std_deviation, "Std. Deviation", summary['sampler_label']) 
+        "<b>#{std_deviation}</b>"
       else 
-        "%.2f" % summary['standard_deviation']
+        std_deviation
       end
   end
 
   def percent_deviation_report_line(summary) 
-      percentil_deviation =  ((summary['standard_deviation'] / summary['aggregate_report_max']) * 100)
+      percentil_deviation = ( "%.2f" % ((summary['standard_deviation'] / summary['aggregate_report_max']) * 100)).to_f
       if percentil_deviation > @max_percentil_deviation
         desc_issue(@max_percentil_deviation, percentil_deviation, "% Deviation", summary['sampler_label']) 
-       "<b>#{ "%.2f" % percentil_deviation}</b>"
+       "<b>#{percentil_deviation}</b>"
       else 
-        "%.2f" % percentil_deviation
+        percentil_deviation
       end
   end
 
   def max_min_report_line(summary) 
-      if summary["aggregate_report_min"] > @max_min_time
-        desc_issue(@max_min_time, summary["aggregate_report_min"], "Min Time", summary['sampler_label']) 
-        "<b>#{summary["aggregate_report_min"]}</b>"
+      min = summary["aggregate_report_min"]
+      if min > @max_min_time
+        desc_issue(@max_min_time, min, "Min Time", summary['sampler_label']) 
+        "<b>#{min}</b>"
       else 
-        summary["aggregate_report_min"]
+        min
       end
   end
 
   def max_max_report_line(summary) 
-      if summary["aggregate_report_max"] > @max_max_time
-        desc_issue(@max_max_time, summary["aggregate_report_min"], "Max Time", summary['sampler_label']) 
-        "<b>#{summary["aggregate_report_max"]}</b>"
+      max = summary["aggregate_report_max"]
+      if max > @max_max_time
+        desc_issue(@max_max_time, max, "Max Time", summary['sampler_label']) 
+        "<b>#{max}</b>"
       else 
-        summary["aggregate_report_max"]
+        max
       end
   end
 
