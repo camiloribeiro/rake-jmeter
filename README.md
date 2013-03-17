@@ -1,4 +1,4 @@
-rake-jmeter
+Rake-JMeter ლ(ಠ_ಠლ)
 ===========
 
 Tasks to handle JMeter test execution
