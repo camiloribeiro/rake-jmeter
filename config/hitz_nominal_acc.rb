@@ -12,7 +12,7 @@
 @max_standard_deviation = 500
 
 #max Standard Deviation
-@max_percentil_deviation = 25
+@max_percentil_deviation = 5
 
 #Error Rate
 @max_error_rate = 1
@@ -27,7 +27,7 @@
 @max_max_time = 2100
 
 #MIN throughput
-@min_throughput = 1.3
+@min_throughput = 150
 
 #MIN samplers
 @min_samplers = 50
