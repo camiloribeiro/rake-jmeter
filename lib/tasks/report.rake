@@ -86,8 +86,8 @@ namespace :report do
   task 'return_console', :out_dir do |t, args|
     puts (  "#{args.out_dir}/Summary.html")
    # Launchy.open "#{args.out_dir}/Summary.html" 
-    puts 0 if @issues.size == 0
-    puts "ERROR, see report" if @issues.size != 0
+   # puts 0 if @issues.size == 0
+   # puts "ERROR, see report" if @issues.size != 0
   end
 
   task :st_deviation, :jtl, :out_dir do |t, args|
