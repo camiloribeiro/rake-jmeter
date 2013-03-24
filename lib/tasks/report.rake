@@ -19,7 +19,6 @@ task :report, :jtl do |t, args|
 
   out_dir = File.expand_path(File.join('reports', File.basename(jtl, '.jtl')))
   FileUtils.mkdir_p out_dir
-
   puts "Before the symlink..."
   symlink_log = File.join('reports', (File.basename(jtl, '.jtl').split('_')[0..-3]).join('_'))
   File.delete(symlink_log) if File.exists?(symlink_log)
