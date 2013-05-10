@@ -1,0 +1,384 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/><style>h1,h2,h3,h4 { margin-bottom: .5em; margin-top: .5em; }</style><title>Sample Example - Performance Test Summary</title></head><body><div><h1>Sample Example – sample nominal</h1>
+
+<ul>
+<li>Executed at 01/05/13, às 20:05</li>
+<li>JMeter log: <code>sample_nominal_20130501_230535.jtl</code></li>
+</ul>
+
+<h2>Summary</h2>
+
+<p>Result Table:</p>
+
+<table><thead>
+<tr>
+<th>Page</th>
+<th>Requests</th>
+<th>AVG</th>
+<th>Median</th>
+<th>Std Deviation</th>
+<th>% Deviation</th>
+<th>Minimum</th>
+<th>90%</th>
+<th>Maximum</th>
+<th>Throughput</th>
+<th>% error</th>
+<th>% &lt; 500ms</th>
+<th>% &lt; 2s</th>
+<th>% &lt; 4s</th>
+<th>% &lt; 6s</th>
+<th>% &lt; 8s</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Home Page</td>
+<td>69</td>
+<td>780</td>
+<td>748</td>
+<td>400.36</td>
+<td><b>26.87</b></td>
+<td>155</td>
+<td>1337</td>
+<td>1490</td>
+<td>2.22</td>
+<td>0.0</td>
+<td>31.8</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>Search Page</td>
+<td>65</td>
+<td>591</td>
+<td>621</td>
+<td>228.07</td>
+<td><b>25.01</b></td>
+<td>174</td>
+<td>864</td>
+<td>912</td>
+<td>2.22</td>
+<td>0.0</td>
+<td>36.9</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>Simple Form 2</td>
+<td>61</td>
+<td><b>4400</b></td>
+<td><b>4219</b></td>
+<td><b>2522.53</b></td>
+<td><b>27.78</b></td>
+<td><b>445</b></td>
+<td><b>7528</b></td>
+<td><b>9079</b></td>
+<td>1.62</td>
+<td>0.0</td>
+<td><b>1.60</b></td>
+<td><b>24.50</b></td>
+<td><b>47.50</b></td>
+<td><b>68.80</b></td>
+<td><b>91.80</b></td>
+</tr>
+<tr>
+<td>Simple Form 1</td>
+<td>51</td>
+<td><b>1294</b></td>
+<td><b>1175</b></td>
+<td><b>519.98</b></td>
+<td>23.7</td>
+<td><b>513</b></td>
+<td><b>2055</b></td>
+<td><b>2194</b></td>
+<td>1.9</td>
+<td><b>3.92</b></td>
+<td><b>0.00</b></td>
+<td><b>86.20</b></td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>TOTAL</td>
+<td>246</td>
+<td><b>1734</b></td>
+<td>896</td>
+<td><b>2023.67</b></td>
+<td>22.29</td>
+<td>155</td>
+<td><b>5288</b></td>
+<td><b>9079</b></td>
+<td>6.12</td>
+<td>0.81</td>
+<td><b>17.58</b></td>
+<td><b>77.63</b></td>
+<td><b>86.80</b></td>
+<td><b>92.13</b></td>
+<td><b>97.88</b></td>
+</tr>
+</tbody></table>
+
+<h2>Thread Distribution (Thread State Over Time)</h2>
+
+<p><img src="ThreadsStateOverTime.png" alt="Distribuição das threads"></p>
+
+<h2>Response Time</h2>
+
+<p><img src="ResponseTimesOverTime.png" alt="Tempos de Resposta"></p>
+
+<h2>Latency Time</h2>
+
+<p><img src="LatenciesOverTime.png" alt="Tempos de Latência"></p>
+
+<h1>Response types</h1>
+
+<p><img src="ResponseCodesPerSecond.png" alt="Status das respostas"></p>
+
+<h1>Response time distribution</h1>
+
+<p><img src="ResponseTimesDistribution.png" alt="Distribuição de tempos de resposta"></p>
+
+<h1>Response time percentils</h1>
+
+<p><img src="ResponseTimesPercentiles.png" alt="Percentis de tempos de resposta"></p>
+
+<p>Issues:</p>
+
+<table><thead>
+<tr>
+<th>Issue</th>
+<th>Label</th>
+<th>Item</th>
+<th>Expected</th>
+<th>Real</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Home Page</td>
+<td>% Deviation</td>
+<td>25</td>
+<td>26.87</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Search Page</td>
+<td>% Deviation</td>
+<td>25</td>
+<td>25.01</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Simple Form 2</td>
+<td>Average</td>
+<td>1000</td>
+<td>4400</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Simple Form 2</td>
+<td>Median</td>
+<td>1000</td>
+<td>4219</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Simple Form 2</td>
+<td>Std. Deviation</td>
+<td>1000</td>
+<td>2522.53</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Simple Form 2</td>
+<td>% Deviation</td>
+<td>25</td>
+<td>27.78</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Simple Form 2</td>
+<td>Min Time</td>
+<td>400</td>
+<td>445</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Simple Form 2</td>
+<td>90% Line</td>
+<td>2000</td>
+<td>7528</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Simple Form 2</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>9079</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Simple Form 2</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>1.6</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Simple Form 2</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>24.5</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Simple Form 2</td>
+<td>Under 4s</td>
+<td>95</td>
+<td>47.5</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Simple Form 2</td>
+<td>Under 6s</td>
+<td>97</td>
+<td>68.8</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Simple Form 2</td>
+<td>Under 8s</td>
+<td>99</td>
+<td>91.8</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Simple Form 1</td>
+<td>Average</td>
+<td>1000</td>
+<td>1294</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Simple Form 1</td>
+<td>Median</td>
+<td>1000</td>
+<td>1175</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Simple Form 1</td>
+<td>Std. Deviation</td>
+<td>1000</td>
+<td>519.98</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Simple Form 1</td>
+<td>Min Time</td>
+<td>400</td>
+<td>513</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Simple Form 1</td>
+<td>90% Line</td>
+<td>2000</td>
+<td>2055</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Simple Form 1</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>2194</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Simple Form 1</td>
+<td>% Error</td>
+<td>1</td>
+<td>3.92</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Simple Form 1</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>0</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Simple Form 1</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>86.2</td>
+</tr>
+<tr>
+<td>24</td>
+<td>TOTAL</td>
+<td>Average</td>
+<td>1000</td>
+<td>1734</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TOTAL</td>
+<td>Std. Deviation</td>
+<td>1000</td>
+<td>2023.67</td>
+</tr>
+<tr>
+<td>26</td>
+<td>TOTAL</td>
+<td>90% Line</td>
+<td>2000</td>
+<td>5288</td>
+</tr>
+<tr>
+<td>27</td>
+<td>TOTAL</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>9079</td>
+</tr>
+<tr>
+<td>28</td>
+<td>TOTAL</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>17.575000000000003</td>
+</tr>
+<tr>
+<td>29</td>
+<td>TOTAL</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>77.62500000000001</td>
+</tr>
+<tr>
+<td>30</td>
+<td>TOTAL</td>
+<td>Under 4s</td>
+<td>95</td>
+<td>86.80000000000001</td>
+</tr>
+<tr>
+<td>31</td>
+<td>TOTAL</td>
+<td>Under 6s</td>
+<td>97</td>
+<td>92.12500000000001</td>
+</tr>
+<tr>
+<td>32</td>
+<td>TOTAL</td>
+<td>Under 8s</td>
+<td>99</td>
+<td>97.875</td>
+</tr>
+</tbody></table>
+<script>document.getElementsByTagName("table")[0].setAttribute("class", "table table-bordered table-striped")</script><script>document.getElementsByTagName("table")[1].setAttribute("class", "table table-bordered table-striped")</script></div></body></html>
