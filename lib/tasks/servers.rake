@@ -4,7 +4,7 @@ namespace :servers do
   task :start, [:properties_file] => [:stop] do |t , args|
   STRESS_SERVERS_EXTERNAL.each do |machine|
       puts "[INFO][#{Time.now.to_i}] Starting JMeter server on #{machine.name}..."
-      cmd = "nohup ssh #{machine.name} '~/#{@project_dir}/jmeter/2.7/libexec/bin/jmeter-server -p ~/#{@project_dir}/#{args.properties_file}' 2>&1 >> /dev/null < /dev/null &"
+      cmd = "nohup ssh #{machine.name} '~/#{@project_dir}/jmeter/2.9/bin/jmeter-server -p ~/#{@project_dir}/#{args.properties_file}' 2>&1 >> /dev/null < /dev/null &"
       ENV['DRY'] ? puts(cmd) : sh(cmd)
     end
   end

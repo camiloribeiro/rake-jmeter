@@ -25,7 +25,7 @@ namespace :perf do
     puts "[INFO][#{Time.now.to_i}] Servers restarted"
 
     cmds = []
-    jmeter = "~/#{@project_dir}/jmeter/2.7/libexec/bin/jmeter"
+    jmeter = "~/#{@project_dir}/jmeter/2.9/bin/jmeter"
 
     cmds << %[ssh -C #{MASTER.name} "rm -rf ~/#{@project_dir}/logs/* && #{jmeter} -n -p ~/#{@project_dir}/#{properties} -t ~/#{@project_dir}/#{plan} -l ~/#{@project_dir}/#{log} -R #{STRESS_SERVERS_INTERNAL.map {|a| a.host}.join(',')}"]
     cmds << %[scp -C #{MASTER.name}:~/#{@project_dir}/#{log} ./#{log}]
