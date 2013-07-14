@@ -35,34 +35,6 @@ end
 
 namespace :report do
 
-#  desc 'Generates a partial report from a incomplete (without </testResults>) JTL file'
-#  task :partial_report do
-#    puts "Cleaning"
-#    Dir['logs/*'].each {|f| FileUtils.rm f}
-#    puts "clean: #{Dir['logs/*']}"
-#    sh %[scp -C #{MASTER.name}:~/#{@project_dir}/logs/*.jtl ./logs/]
-#
-#    partial_report_name = Dir['./logs/*.jtl'].detect {|f| ! (f =~ /error/)}
-#    partial_report = File.read(partial_report_name)
-#    unless partial_report =~ /<\/testResults>/
-#      File.open(partial_report_name, "a") do |f|
-#      f << "</testResults>"
-#      end
-#    end
-#
-#    partial_error_report_name = Dir['./logs/*.jtl'].detect {|f| (f =~ /error/)}
-#    puts partial_error_report_name
-#    partial_error_report = File.read(partial_error_report_name)
-#    unless partial_error_report =~ /<\/testResults>/
-#      File.open(partial_error_report_name, "a") do |f|
-#      f << "</testResults>"
-#      end
-#    end
-#
-#    at_exit { Launchy.open "reports/#{File.basename(partial_report_name, '.jtl')}/Summary.html" }
-##    Rake::Task[:report].invoke partial_report_name
-#  end
-
   task :pngs, :jtl, :out_dir do |t, args|
     REPORTS.each do |report|
       jmeter_cmd :jtl => File.expand_path(args.jtl),
