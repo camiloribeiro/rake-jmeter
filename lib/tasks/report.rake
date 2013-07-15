@@ -7,7 +7,6 @@ REPORTS = %w[
   ResponseTimesDistribution
   ResponseTimesPercentiles
   ThroughputVsThreads
-  ThroughputOverTime
 ]
 
 desc 'Generates a report from a JTL file'
@@ -136,7 +135,7 @@ namespace :report do
 Result Table:
 
 Page|Requests|AVG|Median|Std Deviation|% Deviation|Minimum|90%|Maximum|Throughput|% error|% < 500ms|% < 2s|% < 4s|% < 6s|% < 8s
-----|--------|---|------|------------------|-----------|-------|---|-------|------------------|-------|---------|------|------|------|------
+----|--------|---|------|-------------|-----------|-------|---|-------|----------|-------|---------|------|------|------|------
 MKD
     aggregate.each do |agg|
       summary = agg.merge(percentiles_below_threshold.find {|pbt| pbt['Transaction'] == agg['sampler_label']} || {})
@@ -192,7 +191,7 @@ MKD
 Issues:
 
 Issue|Label|Item|Expected|Real
-------|-------------|-----|-------|------
+-----|-----|----|--------|----
 MKD
     @issues.each do |issue|
       md << [issue.id,
@@ -236,7 +235,7 @@ MKD
         --generate-#{report_type} #{File.expand_path File.join(out_dir, report)}.#{report_type} \
         --input-jtl #{File.expand_path jtl} \
         --plugin-type #{report} \
-        --aggregate-rows #{!aggregate || %w[ResponseCodesPerSecond ThroughputOverTime ThroughputVsThreads].include?(report) ? 'no' : 'yes'} \
+        --aggregate-rows #{!aggregate || %w[ResponseCodesPerSecond ThroughputVsThreads].include?(report) ? 'no' : 'yes'} \
         #{"--paint-gradient no" if report_type == :png} \
         #{"--width #{width}" if width} \
         #{"--height #{height}" if height}
