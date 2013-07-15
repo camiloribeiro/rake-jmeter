@@ -1,0 +1,370 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/><style>h1,h2,h3,h4 { margin-bottom: .5em; margin-top: .5em; }</style><title>Sample Example - Performance Test Summary</title></head><body><div><h1>Sample Example – sample nominal</h1>
+
+<ul>
+<li>Executed at 14/07/13, às 20:46</li>
+<li>JMeter log: <code>sample_nominal_20130714_234638.jtl</code></li>
+</ul>
+
+<h2>Summary</h2>
+
+<p>Result Table:</p>
+
+<table><thead>
+<tr>
+<th>Page</th>
+<th>Requests</th>
+<th>AVG</th>
+<th>Median</th>
+<th>Std Deviation</th>
+<th>% Deviation</th>
+<th>Minimum</th>
+<th>90%</th>
+<th>Maximum</th>
+<th>Throughput</th>
+<th>% error</th>
+<th>% &lt; 500ms</th>
+<th>% &lt; 2s</th>
+<th>% &lt; 4s</th>
+<th>% &lt; 6s</th>
+<th>% &lt; 8s</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Home Page</td>
+<td>63</td>
+<td>824</td>
+<td>893</td>
+<td>430.15</td>
+<td><b>28.81</b></td>
+<td>146</td>
+<td>1426</td>
+<td>1493</td>
+<td>2.28</td>
+<td>0.0</td>
+<td>31.7</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>Search Page</td>
+<td>61</td>
+<td>523</td>
+<td>489</td>
+<td>211.94</td>
+<td>23.04</td>
+<td>153</td>
+<td>822</td>
+<td>920</td>
+<td>2.32</td>
+<td>0.0</td>
+<td>50.8</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>Simple Form 2</td>
+<td>60</td>
+<td><b>4890</b></td>
+<td><b>4427</b></td>
+<td><b>2602.37</b></td>
+<td><b>28.4</b></td>
+<td>255</td>
+<td><b>7989</b></td>
+<td><b>9164</b></td>
+<td>1.57</td>
+<td>0.0</td>
+<td><b>3.30</b></td>
+<td><b>16.60</b></td>
+<td><b>43.30</b></td>
+<td><b>58.30</b></td>
+<td><b>90.00</b></td>
+</tr>
+<tr>
+<td>Simple Form 1</td>
+<td><b>48</b></td>
+<td><b>1376</b></td>
+<td><b>1326</b></td>
+<td>447.86</td>
+<td>21.18</td>
+<td><b>570</b></td>
+<td>1988</td>
+<td><b>2115</b></td>
+<td>1.77</td>
+<td><b>6.25</b></td>
+<td><b>0.00</b></td>
+<td><b>89.50</b></td>
+<td>99.9</td>
+<td>99.9</td>
+<td>99.9</td>
+</tr>
+<tr>
+<td>TOTAL</td>
+<td>232</td>
+<td><b>1911</b></td>
+<td>990</td>
+<td><b>2244.39</b></td>
+<td>24.49</td>
+<td>146</td>
+<td><b>6676</b></td>
+<td><b>9164</b></td>
+<td>5.5</td>
+<td><b>1.29</b></td>
+<td><b>21.45</b></td>
+<td><b>76.48</b></td>
+<td><b>85.75</b></td>
+<td><b>89.50</b></td>
+<td><b>97.43</b></td>
+</tr>
+</tbody></table>
+
+<h2>Thread Distribution (Thread State Over Time)</h2>
+
+<p><img src="ThreadsStateOverTime.png" alt="Distribuição das threads"></p>
+
+<h2>Response Time</h2>
+
+<p><img src="ResponseTimesOverTime.png" alt="Tempos de Resposta"></p>
+
+<h2>Latency Time</h2>
+
+<p><img src="LatenciesOverTime.png" alt="Tempos de Latência"></p>
+
+<h1>Response types</h1>
+
+<p><img src="ResponseCodesPerSecond.png" alt="Status das respostas"></p>
+
+<h1>Response time distribution</h1>
+
+<p><img src="ResponseTimesDistribution.png" alt="Distribuição de tempos de resposta"></p>
+
+<h1>Response time percentils</h1>
+
+<p><img src="ResponseTimesPercentiles.png" alt="Percentis de tempos de resposta"></p>
+
+<p>Issues:</p>
+
+<table><thead>
+<tr>
+<th>Issue</th>
+<th>Label</th>
+<th>Item</th>
+<th>Expected</th>
+<th>Real</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Home Page</td>
+<td>% Deviation</td>
+<td>25</td>
+<td>28.81</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Simple Form 2</td>
+<td>Average</td>
+<td>1000</td>
+<td>4890</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Simple Form 2</td>
+<td>Median</td>
+<td>1000</td>
+<td>4427</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Simple Form 2</td>
+<td>Std. Deviation</td>
+<td>1000</td>
+<td>2602.37</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Simple Form 2</td>
+<td>% Deviation</td>
+<td>25</td>
+<td>28.4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Simple Form 2</td>
+<td>90% Line</td>
+<td>2000</td>
+<td>7989</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Simple Form 2</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>9164</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Simple Form 2</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>3.3000000000000003</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Simple Form 2</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>16.6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Simple Form 2</td>
+<td>Under 4s</td>
+<td>95</td>
+<td>43.3</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Simple Form 2</td>
+<td>Under 6s</td>
+<td>97</td>
+<td>58.3</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Simple Form 2</td>
+<td>Under 8s</td>
+<td>99</td>
+<td>90.0</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Simple Form 1</td>
+<td>Number of samplers</td>
+<td>50</td>
+<td>48</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Simple Form 1</td>
+<td>Average</td>
+<td>1000</td>
+<td>1376</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Simple Form 1</td>
+<td>Median</td>
+<td>1000</td>
+<td>1326</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Simple Form 1</td>
+<td>Min Time</td>
+<td>400</td>
+<td>570</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Simple Form 1</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>2115</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Simple Form 1</td>
+<td>% Error</td>
+<td>1</td>
+<td>6.25</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Simple Form 1</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>0</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Simple Form 1</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>89.5</td>
+</tr>
+<tr>
+<td>21</td>
+<td>TOTAL</td>
+<td>Average</td>
+<td>1000</td>
+<td>1911</td>
+</tr>
+<tr>
+<td>22</td>
+<td>TOTAL</td>
+<td>Std. Deviation</td>
+<td>1000</td>
+<td>2244.39</td>
+</tr>
+<tr>
+<td>23</td>
+<td>TOTAL</td>
+<td>90% Line</td>
+<td>2000</td>
+<td>6676</td>
+</tr>
+<tr>
+<td>24</td>
+<td>TOTAL</td>
+<td>Max Time</td>
+<td>2100</td>
+<td>9164</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TOTAL</td>
+<td>% Error</td>
+<td>1</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>26</td>
+<td>TOTAL</td>
+<td>Under 0.5s</td>
+<td>30</td>
+<td>21.45</td>
+</tr>
+<tr>
+<td>27</td>
+<td>TOTAL</td>
+<td>Under 2s</td>
+<td>90</td>
+<td>76.47500000000001</td>
+</tr>
+<tr>
+<td>28</td>
+<td>TOTAL</td>
+<td>Under 4s</td>
+<td>95</td>
+<td>85.75</td>
+</tr>
+<tr>
+<td>29</td>
+<td>TOTAL</td>
+<td>Under 6s</td>
+<td>97</td>
+<td>89.5</td>
+</tr>
+<tr>
+<td>30</td>
+<td>TOTAL</td>
+<td>Under 8s</td>
+<td>99</td>
+<td>97.42500000000001</td>
+</tr>
+</tbody></table>
+<script>document.getElementsByTagName("table")[0].setAttribute("class", "table table-bordered table-striped")</script><script>document.getElementsByTagName("table")[1].setAttribute("class", "table table-bordered table-striped")</script></div></body></html>
