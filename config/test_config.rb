@@ -1,4 +1,4 @@
-@project_name = "Hitz Example"
+@project_name = "QCon Example"
 @tests = 
 {
     :sample => [:nominal, :soak, :peak, :stress, :dual],
