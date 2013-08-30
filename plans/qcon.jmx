@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.3">
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sample Test" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -35,83 +35,6 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
       </kg.apc.jmeter.threads.UltimateThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Home Page" enabled="false">
-          <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">true</boolProp>
-          <stringProp name="RESPONSE_CODE">200</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(140,1500)}</stringProp>
-          <stringProp name="LATENCY">${__Rando(130,1000)}</stringProp>
-        </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree/>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Search Page" enabled="false">
-          <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">true</boolProp>
-          <stringProp name="RESPONSE_CODE">200</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(150,920)}</stringProp>
-          <stringProp name="LATENCY">${__Random(100,800)}</stringProp>
-        </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree/>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Simple Form 2" enabled="false">
-          <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">true</boolProp>
-          <stringProp name="RESPONSE_CODE">200</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(250,9200)}</stringProp>
-          <stringProp name="LATENCY">${__Random(200,8000)}</stringProp>
-        </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree/>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Simple Form 1" enabled="false">
-          <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">true</boolProp>
-          <stringProp name="RESPONSE_CODE">200</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(500,2200)}</stringProp>
-          <stringProp name="LATENCY">${__Random(100,2000)}</stringProp>
-        </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree/>
-        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Error Throughput Controller" enabled="false">
-          <intProp name="ThroughputController.style">1</intProp>
-          <boolProp name="ThroughputController.perThread">false</boolProp>
-          <intProp name="ThroughputController.maxThroughput">1</intProp>
-          <FloatProperty>
-            <name>ThroughputController.percentThroughput</name>
-            <value>6.0</value>
-            <savedValue>0.0</savedValue>
-          </FloatProperty>
-        </ThroughputController>
-        <hashTree>
-          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Simple Form 1" enabled="true">
-            <boolProp name="WAITING">true</boolProp>
-            <boolProp name="SUCCESFULL">false</boolProp>
-            <stringProp name="RESPONSE_CODE">503</stringProp>
-            <stringProp name="RESPONSE_MESSAGE">ERROR</stringProp>
-            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-            <stringProp name="RESPONSE_TIME">${__Random(500,2200)}</stringProp>
-            <stringProp name="LATENCY">${__Random(100,2000)}</stringProp>
-          </kg.apc.jmeter.samplers.DummySampler>
-          <hashTree/>
-        </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
@@ -212,7 +135,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">192.168.1.3</stringProp>
+          <stringProp name="HTTPSampler.domain">192.81.212.186</stringProp>
           <stringProp name="HTTPSampler.port">3000</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
