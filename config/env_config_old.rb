@@ -1,10 +1,10 @@
 class Server < Struct.new(:name,:host,:port,:user); end
 
-  @project_dir = "qcon"
+  @project_dir = "hitz"
 
   STRESS_SERVERS_INTERNAL = [
-    Server.new('perf01','192.241.250.165', '22', 'root'),
-    Server.new('perf02','192.241.250.167', '22', 'root')
+    Server.new('vagrant01','10.10.1.10', '22', 'vagrant'),
+    Server.new('vagrant02','10.10.1.11', '22', 'vagrant')
   ]
   STRESS_SERVERS_EXTERNAL = STRESS_SERVERS_INTERNAL
 
