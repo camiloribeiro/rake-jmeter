@@ -210,7 +210,7 @@ MKD
 
     open(File.join(out_dir, 'Summary.html'), 'w') do |f|
       f.write '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>'
-      f.write '<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/>'
+      f.write '<link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css"/>'
       f.write "<style>h1,h2,h3,h4 { margin-bottom: .5em; margin-top: .5em; }</style><title>#{@project_name} - Performance Test Summary</title></head><body>"
       f.write '<div>'
       f.write Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true, :autolink => true).render(md)
