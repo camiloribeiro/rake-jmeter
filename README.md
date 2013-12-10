@@ -97,3 +97,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/camiloribeiro/rake-jmeter/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/camiloribeiro/rake-jmeter/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
