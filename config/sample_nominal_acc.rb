@@ -1,9 +1,21 @@
 #response time
-@min_response_time_under_500ms = 30
-@min_response_time_under_2s = 90
-@min_response_time_under_4s = 95
-@min_response_time_under_6s = 97
-@min_response_time_under_8s = 99
+@min_response_time_under_percentile_1 = 30
+@min_response_time_under_percentile_2 = 90
+@min_response_time_under_percentile_3 = 95
+@min_response_time_under_percentile_4 = 97
+@min_response_time_under_percentile_5 = 99
+
+@percentile_1 = 0.2
+@percentile_2 = 0.25
+@percentile_3 = 0.3
+@percentile_4 = 0.4
+@percentile_5 = 0.5
+
+@percentile_1_label = "under 0.2"
+@percentile_2_label = "under 0.25"
+@percentile_3_label = "under 0.3"
+@percentile_4_label = "under 0.4"
+@percentile_5_label = "under 0.5"
 
 #max over 8s
 @max_over_8 = 1
@@ -12,7 +24,7 @@
 @max_standard_deviation = 500
 
 #max Standard Deviation
-@max_percentil_deviation = 25
+@max_percentile_deviation = 25
 
 #Error Rate
 @max_error_rate = 1

@@ -84,16 +84,16 @@ namespace :report do
     data = CSV.read(file, :headers => true, :converters => [:numeric]).map &:to_hash
 
     open(File.expand_path(File.join(File.dirname(file), 'PercentileBelowThreshold.csv')), 'w') do |f|
-      f.puts 'Transaction,s05,2s,4s,6s,8s'
+      f.puts 'Transaction,percentile_1,percentile_2,percentile_3,percentile_4,percentile_5'
       totals = [0, 0, 0, 0, 0]
       cols = data.first.keys.size - 1
       (data.first.keys - ['Percentiles']).each do |col|
-        totals[0] += (s05 = data.select {|row| row[col] < 500.0 if row }.last['Percentiles'] / 100 rescue 0) / cols
-        totals[1] += (s2 = data.select {|row| row[col] < 2000.0 if row }.last['Percentiles'] / 100 rescue 0) / cols
-        totals[2] += (s4 = data.select {|row| row[col] < 4000.0 if row }.last['Percentiles'] / 100 rescue 0) / cols
-        totals[3] += (s6 = data.select {|row| row[col] < 6000.0 if row }.last['Percentiles'] / 100 rescue 0) / cols
-        totals[4] += (s8 = data.select {|row| row[col] < 8000.0 if row }.last['Percentiles'] / 100 rescue 0) / cols
-        f.puts [col, s05, s2, s4, s6, s8].join(',')
+        totals[0] += (percentile_1 = data.select {|row| row[col] < @percentile_1 if row }.last['Percentiles'] / 100 rescue 0) / cols
+        totals[1] += (percentile_2 = data.select {|row| row[col] < @percentile_2 if row }.last['Percentiles'] / 100 rescue 0) / cols
+        totals[2] += (percentile_3 = data.select {|row| row[col] < @percentile_3 if row }.last['Percentiles'] / 100 rescue 0) / cols
+        totals[3] += (percentile_4 = data.select {|row| row[col] < @percentile_4 if row }.last['Percentiles'] / 100 rescue 0) / cols
+        totals[4] += (percentile_5 = data.select {|row| row[col] < @percentile_5 if row }.last['Percentiles'] / 100 rescue 0) / cols
+        f.puts [col, percentile_1, percentile_2, percentile_3, percentile_4, percentile_5].join(',')
       end
       f.puts ['TOTAL', *totals].join(',')
     end
@@ -134,7 +134,7 @@ namespace :report do
 
 Result Table:
 
-Page|Requests|AVG|Median|Std Deviation|% Deviation|Minimum|90%|Maximum|Throughput|% error|% < 500ms|% < 2s|% < 4s|% < 6s|% < 8s
+Page|Requests|AVG|Median|Std Deviation|% Deviation|Minimum|90%|Maximum|Throughput|% error|#{@percentile_1_label}|#{@percentile_2_label}|#{@percentile_3_label}|#{@percentile_4_label}|#{@percentile_5_label}
 ----|--------|---|------|-------------|-----------|-------|---|-------|----------|-------|---------|------|------|------|------
 MKD
     aggregate.each do |agg|
@@ -149,15 +149,15 @@ MKD
         stdeviation_report_line(summary),
         percent_deviation_report_line(summary),
         max_min_report_line(summary),
-        percentil_report_line(summary),
+        percentile_report_line(summary),
         max_max_report_line(summary),
         throughput_report_line(summary),
         error_rate_report_line(summary),
-        s05_report_line(summary),
-        s2_report_line(summary),
-        s4_report_line(summary),
-        s6_report_line(summary),
-        s8_report_line(summary),
+        percentile_1_report_line(summary),
+        percentile_2_report_line(summary),
+        percentile_3_report_line(summary),
+        percentile_4_report_line(summary),
+        percentile_5_report_line(summary),
       ].map {|s|  s}.join('|')
       md << "\n"
     end
@@ -283,12 +283,12 @@ MKD
   end
 
   def percent_deviation_report_line(summary) 
-      percentil_deviation = ( "%.2f" % ((summary['standard_deviation'] / summary['aggregate_report_max']) * 100)).to_f
-      if percentil_deviation > @max_percentil_deviation
-        desc_issue(@max_percentil_deviation, percentil_deviation, "% Deviation", summary['sampler_label']) 
-       "<b>#{percentil_deviation}</b>"
+      percentile_deviation = ( "%.2f" % ((summary['standard_deviation'] / summary['aggregate_report_max']) * 100)).to_f
+      if percentile_deviation > @max_percentile_deviation
+        desc_issue(@max_percentile_deviation, percentile_deviation, "% Deviation", summary['sampler_label']) 
+       "<b>#{percentile_deviation}</b>"
       else 
-        percentil_deviation
+        percentile_deviation
       end
   end
 
@@ -312,7 +312,7 @@ MKD
       end
   end
 
-  def percentil_report_line(summary) 
+  def percentile_report_line(summary) 
       line90 = summary["aggregate_report_90%_line"]
       if line90 > @max_90
         desc_issue(@max_90, line90, "90% Line", summary['sampler_label']) 
@@ -342,56 +342,56 @@ MKD
       end
   end
 
-  def s05_report_line(summary) 
-     line_real = (summary["s05"] * 100)
-     line_expected = @min_response_time_under_500ms
+  def percentile_1_report_line(summary) 
+     line_real = (summary["percentile_1"] * 100)
+     line_expected = @min_response_time_under_percentile_1
      if line_real < line_expected
-        desc_issue(line_expected, line_real, "Under 0.5s", summary['sampler_label']) 
-        "<b>#{ "%.2f" % line_real}</b>"
+        desc_issue(line_expected, line_real, @percentile_1_label , summary['sampler_label']) 
+        "<b>#{ "%.4f" % line_real}</b>"
       else 
        line_real
       end
   end
 
-  def s2_report_line(summary) 
-     line_real = (summary["2s"] * 100 )
-     line_expected = @min_response_time_under_2s
+  def percentile_2_report_line(summary) 
+     line_real = (summary["percentile_2"] * 100 )
+     line_expected = @min_response_time_under_percentile_2
      if line_real < line_expected
-        desc_issue(line_expected, line_real, "Under 2s", summary['sampler_label']) 
-        "<b>#{ "%.2f" % line_real}</b>"
+        desc_issue(line_expected, line_real, @percentile_2_label , summary['sampler_label']) 
+        "<b>#{ "%.4f" % line_real}</b>"
       else 
         line_real
       end
   end
 
-  def s4_report_line(summary) 
-     line_real = (summary["4s"] * 100 )
-     line_expected = @min_response_time_under_4s
+  def percentile_3_report_line(summary) 
+     line_real = (summary["percentile_3"] * 100 )
+     line_expected = @min_response_time_under_percentile_3
      if line_real < line_expected
-        desc_issue(line_expected, line_real, "Under 4s", summary['sampler_label']) 
-        "<b>#{ "%.2f" % line_real}</b>"
+        desc_issue(line_expected, line_real, @percentile_3_label , summary['sampler_label']) 
+        "<b>#{ "%.4f" % line_real}</b>"
       else 
         line_real
       end
   end
 
-  def s6_report_line(summary) 
-     line_real = (summary["6s"] * 100)
-     line_expected = @min_response_time_under_6s
+  def percentile_4_report_line(summary) 
+     line_real = (summary["percentile_4"] * 100)
+     line_expected = @min_response_time_under_percentile_4
      if line_real < line_expected
-        desc_issue(line_expected, line_real, "Under 6s", summary['sampler_label']) 
-        "<b>#{ "%.2f" % line_real}</b>"
+        desc_issue(line_expected, line_real, @percentile_4_label , summary['sampler_label']) 
+        "<b>#{ "%.4f" % line_real}</b>"
       else 
         line_real
       end
   end
 
-  def s8_report_line(summary) 
-     line_real = (summary["8s"] * 100)
-     line_expected = @min_response_time_under_8s
+  def percentile_5_report_line(summary) 
+     line_real = (summary["percentile_5"] * 100)
+     line_expected = @min_response_time_under_percentile_5
      if line_real < line_expected
-        desc_issue(line_expected, line_real, "Under 8s", summary['sampler_label']) 
-        "<b>#{ "%.2f" % line_real}</b>"
+        desc_issue(line_expected, line_real, @percentile_5_label , summary['sampler_label']) 
+        "<b>#{ "%.4f" % line_real}</b>"
       else 
        line_real
       end

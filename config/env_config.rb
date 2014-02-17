@@ -1,6 +1,6 @@
 class Server < Struct.new(:name,:host,:port,:user); end
 
-  @project_dir = "hitz"
+  @project_dir = "Sample"
 
   STRESS_SERVERS_INTERNAL = [
     Server.new('vagrant01','10.10.1.10', '22', 'vagrant'),
