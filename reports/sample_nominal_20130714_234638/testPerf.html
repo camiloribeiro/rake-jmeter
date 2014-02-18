@@ -37,6 +37,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 
     <script>
       var page = 0;
+
       function updatePage(newPage){
         page = newPage;
         updateTable();
@@ -55,7 +56,6 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         var deviation_data = google.visualization.arrayToDataTable(deviation[page]);
 
         var options = {
-          // title: 'kala',
           height: 500
           ,pointSize: 5
           ,width: 1200
@@ -118,9 +118,6 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       }
 
       function AreaSelectHander(chart, gdata, options) {
-        // when ever clicked we enter here 
-        // more code needed to inspect what actually was clicked, now assuming people
-        // play nicely and click only lables...
         var selection = chart.getSelection();       
         var view = new google.visualization.DataView(gdata);
         console.log(options);

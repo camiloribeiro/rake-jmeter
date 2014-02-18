@@ -3,7 +3,7 @@ var name_resource = [["Page Example"],["Second Page"], ["Third Page"], ["Fourth 
 
 var num_requests = [
 [["request_label","Number of Requests"],["Build 312",120],["Build 313",130],["Build 314",125],["Build 315",120],["Build 316",116],["Build 317",123],["Build 318",132],["Build 319",130],["Build 320",125],["Build 321",139]],
-[["request_label","Number of Requests"],["Build 42",120],["Build 43",130],["Build 44",125],["Build 45",120],["Build 46",116],["Build 47",123],["Build 48",132],["Build 49",130],["Build 320",125],["Build 321",139]],
+[["request_label","Number of Requests"],["Build 42",100],["Build 43",110],["Build 44",145],["Build 45",125],["Build 46",156],["Build 47",147],["Build 48",102],["Build 49",140],["Build 320",135],["Build 321",123]],
 [["request_label","Number of Requests"],["Build 542",120],["Build 543",130],["Build 544",125],["Build 545",120],["Build 546",116],["Build 547",123],["Build 548",132],["Build 549",130],["Build 320",125],["Build 321",139]],
 [["request_label","Number of Requests"],["Build 62",120],["Build 63",130],["Build 64",125],["Build 65",120],["Build 66",116],["Build 67",123],["Build 68",132],["Build 69",130],["Build 320",125],["Build 321",139]]
 ];
