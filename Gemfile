@@ -7,3 +7,6 @@ gem 'vagrant'
 gem 'rspec'
 gem 'pry'
 gem 'launchy'
+gem 'redis'
+gem 'groupdate'
+gem "chartkick"
