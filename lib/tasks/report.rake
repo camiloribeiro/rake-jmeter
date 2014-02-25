@@ -11,6 +11,7 @@ REPORTS = %w[
 
 desc 'Generates a report from a JTL file'
 task :report, :jtl do |t, args|
+  @pages = "" 
   jtl = File.expand_path(args.jtl)
   raise "#{jtl} does not exist" unless File.exists?(jtl)
   acc_file = "config/#{(File.basename(jtl, '.jtl').split('_')[0..-3]).join('_')}_acc.rb"
@@ -426,6 +427,7 @@ MKD
 
   def saveData(file, key, value)
     file = "#{file.gsub(/\s+/, "_")}"
+    @pages += ",#{file}"
     file = "./data/#{file}.csv"
     File.open(file, "r").each_line do |line|
       if(line =~ /^#{key}/)
@@ -437,30 +439,37 @@ MKD
   end
 
   def writeReportTime
-    page = '<!-- You are free to copy and use this sample in accordance with the terms of the Apache license (http://www.apache.org/licenses/LICENSE-2.0.html) --> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta charset="utf-8"> <title>Performance Report</title> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta name="description" content=""> <meta name="author" content=""> <!-- Le styles --> <link href="bootstrap/css/bootstrap.css" rel="stylesheet"> <style> body { padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */ } </style> <!-- HTML5 shim, for IE6-8 support of HTML5 elements --> <!--[if lt IE 9]> <script src="../assets/js/html5shiv.js"></script> <![endif]--> <!-- Fav and touch icons --> <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png"> <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png"> <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png"> <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> <link rel="shortcut icon" href="../assets/ico/favicon.png"> <script type="text/javascript" src="https://www.google.com/jsapi"></script> <script src="./chartkick.js"></script> </head>'
-    page += '<body> <div class="navbar navbar-inverse navbar-fixed-top"> <div class="navbar-inner"> <div class="container"> <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="brand" id="project_name" href="#"></a> <div class="nav-collapse collapse"> <ul class="nav"> <script> for (var i = 0; i < name_resource.length; i++) { document.write("<li><a href="#" onclick="updatePage("+i+");">"+name_resource[i]+"</a></li>"); } </script> </ul> </div><!--/.nav-collapse --> </div> </div> </div> <div class="container">' 
-    page += "<div><H2>Pagina X</h2>"
-
-    File.open("data/Home_Page.csv", "r").each_line do |line|
-      name = line.split("|")[0]
-      data = line.slice(line.index("|")+1..-1)
-      page += addChart(name, data)
+    page = '<!-- You are free to copy and use this sample in accordance with the terms of the Apache license (http://www.apache.org/licenses/LICENSE-2.0.html) --> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta charset="utf-8"> <title>Performance Report</title> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta name="description" content=""> <meta name="author" content=""> <!-- Le styles --> <link href="bootstrap/css/bootstrap.css" rel="stylesheet"> <style> body { padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */ } </style> <!-- HTML5 shim, for IE6-8 support of HTML5 elements --> <!--[if lt IE 9]> <script src="../assets/js/html5shiv.js"></script> <![endif]--> <!-- Fav and touch icons --> <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png"> <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png"> <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png"> <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> <link rel="shortcut icon" href="../assets/ico/favicon.png"> <script type="text/javascript" src="https://www.google.com/jsapi"></script> <script src="./chartkick.js"> </script> <script></script> </head>'
+    page += "<body> <div class='navbar navbar-inverse navbar-fixed-top'> <div class='navbar-inner'> <div class='container'> <button type='button' class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'> <span class='icon-bar'></span> <span class='icon-bar'></span> <span class='icon-bar'></span> </button> <a class='brand' id='project_name' href='#'>#{@project_name}</a> <div class='nav-collapse collapse'> <ul class='nav'>"
+    @pages.split(",").uniq.reject! { |c| c.empty? }.each do |page_name|
+      page += "<li><a href='##{page_name}'>#{page_name}</a></li>" 
     end
-    page += '</div>' 
+    page += "</ul> </div><!--/.nav-collapse --> </div> </div> </div> <div class='container'>"
+
+    @pages.split(",").uniq.reject! { |c| c.empty? }.each do |page_name|
+      page += "<div id='#{page_name}'><H2>#{page_name}</h2>"
+
+      File.open("data/#{page_name}.csv", "r").each_line do |line|
+        name = line.split("|")[0]
+        data = line.slice(line.index("|")+1..-1)
+        page += addChart(name, data, page_name)
+      end
+      page += '</div>' 
+    end
     page += ' <!-- /container --> </body>' 
 
-    File.open("myFile.html", 'w') { |file| file.write(page)}
+    File.open("data/overTime.html", 'w') { |file| file.write(page)}
   end
 
-  def addChart(name, data)
+  def addChart(name, data, page_name)
     require "chartkick"
     include Chartkick
     allTuples = ""
     fragment = "<h3>#{name}</h3>"
-    fragment << "<div id='#{name}' style='height: 300px; text-align: center; color: #999; line-height: 300px; font-size: 14px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif;'>"
+    fragment << "<div id='#{page_name}_#{name}' style='height: 300px; text-align: center; color: #999; line-height: 300px; font-size: 14px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif;'>"
     fragment << "Loading..."
     fragment << "</div><script type='text/javascript'>"
-    fragment << "new Chartkick.LineChart('#{name}',[ {'name':'#{name}', 'data':{ "
+    fragment << "new Chartkick.LineChart('#{page_name}_#{name}',[ {'name':'#{page_name}_#{name}', 'data':{ "
     arr = data.split("|").each do |row| 
       tuple = row.split(":")
       tuple = [tuple[0], tuple[1].to_i].to_a
