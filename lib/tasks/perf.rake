@@ -27,7 +27,7 @@ namespace :perf do
     cmds = []
     jmeter = "#{@project_dir}/jmeter/2.9/bin/jmeter"
 
-    cmds << %[ssh -C #{MASTER.name} "rm -rf #{@project_dir}/logs/* && #{jmeter} -n -p #{@project_dir}/#{properties} -t #{@project_dir}/#{plan} -l #{@project_dir}/#{log} -R #{STRESS_SERVERS_INTERNAL.map {|a| a.host}.join(',')}"]
+    cmds << %[ssh -C #{MASTER.name} "rm -rf ~/#{@project_dir}/logs/* && #{jmeter} -n -p ~/#{@project_dir}/#{properties} -t #{@project_dir}/#{plan} -l #{@project_dir}/#{log} -R #{STRESS_SERVERS_INTERNAL.map {|a| a.host}.join(',')}"]
     cmds << %[scp -C #{MASTER.name}:#{@project_dir}/#{log} ./#{log}]
     cmds.each do |cmd|
       if ENV['DRY']

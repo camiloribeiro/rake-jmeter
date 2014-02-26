@@ -14,10 +14,10 @@ Vagrant::Config.run do |config|
     config.vm.host_name = "quantal64"
   end
 
-#  config.vm.define :vagrant02 do |config|
-#    config.vm.box = "quantal64"
-#    config.vm.forward_port 3307, 3307
-#    config.vm.network :hostonly, "10.10.1.11"
-#    config.vm.host_name = "quantal64"
-#  end
+  config.vm.define :vagrant02 do |config|
+    config.vm.box = "quantal64"
+    config.vm.forward_port 3307, 3307
+    config.vm.network :hostonly, "10.10.1.11"
+    config.vm.host_name = "quantal64"
+  end
 end
