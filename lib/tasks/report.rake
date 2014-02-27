@@ -243,7 +243,7 @@ MKD
     height = options.delete :height
 
     sh <<-CMD
-      java -Xmx1024m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar ./jmeter/2.9/lib/ext/CMDRunner.jar \
+      java -Xmx1024m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar ./jmeter/#{@jmeter_version}/lib/ext/CMDRunner.jar \
         --tool Reporter \
         --generate-#{report_type} #{File.expand_path File.join(out_dir, report)}.#{report_type} \
         --input-jtl #{File.expand_path jtl} \

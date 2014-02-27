@@ -8,6 +8,7 @@ require 'launchy'
 Bundler.require
 
 TARGET_HOST = "foo"
+@jmeter_version = "2.11"
 
 Dir[File.join(File.dirname(__FILE__), 'lib', 'tasks', '**/*.rake')].each {|f| load f }
 
