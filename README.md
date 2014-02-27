@@ -85,7 +85,7 @@ The next great improvement will be the automatic creation of the test plan and i
 LICENSE
 =======
 
-Copyright 2013 Camilo Ribeiro cribeiro@thoughtworks.com and Carlos Villela cv@thoughtworks.com
+Copyright 2013 Camilo Ribeiro camilo@camiloribeiro.com and Carlos Villela cv@thoughtworks.com
 
 This file is part of Rake-JMeter.
 
