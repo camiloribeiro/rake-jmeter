@@ -15,14 +15,16 @@ namespace :sync do
     puts "Downloading JMeter binaries from: #{@jmeter_binaries}" 
     curl = Curl::Easy.new(@jmeter_binaries)
     curl.perform
+    open("./jmeter.tgz", "wb") { |file| file.write(curl.body_str) }
     puts "Download complete" 
-    
-    puts "Extracting files" 
+
+    puts "Extracting files"
+
     Gem::Package::TarReader.new( Zlib::GzipReader.open "./jmeter.tgz") do |tar|
       destination = "./"
       dest = nil
       tar.each do |entry|
-        if entry.full_name == "././@LongLink" 
+        if entry.full_name == "././@LongLink"
           dest = File.join destination, entry.read.strip
           next
         end
@@ -41,6 +43,7 @@ namespace :sync do
         end
         dest = nil
       end
+      puts "Files extracted on ./jmeter"
     end
   end
 end
