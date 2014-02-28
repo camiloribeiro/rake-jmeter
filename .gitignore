@@ -5,7 +5,6 @@ jmeter.log
 .vagrant
 logs/
 reports/
-.DS_Store
 jmeter/
 jmeter.tgz
 jmeter.log
