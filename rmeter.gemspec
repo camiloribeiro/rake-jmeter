@@ -12,9 +12,9 @@ Gem::Specification.new do |s|
   s.summary     = %q{Ruby wraper to run multiserver jmeter tests with nice reports}
   s.description = %q{RMeter is a ruby based implementation of a jmeter multi-server runner, with reports and some spice}
 
-  s.rubyforge_project = "cello"
+  s.rubyforge_project = "rmeter"
 
-  s.files         = `git ls-files`.split("\n")
+  s.files         = `git ls-files --{lib,test,logs,puppet}`.split("\n")
   s.test_files    = `git ls-files -- {test}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.default_executable = 'rmeter'
@@ -30,5 +30,4 @@ Gem::Specification.new do |s|
  s.add_dependency 'groupdate'
  s.add_dependency "chartkick"
  s.add_dependency "curb"
-
 end
