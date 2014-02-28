@@ -1,6 +1,7 @@
 class Server < Struct.new(:name,:host,:port,:user); end
 
   @project_dir = "sample"
+  @jmeter_binaries = "http://camiloribeiro.github.io/jmeter.tgz"
 
   STRESS_SERVERS_INTERNAL = [
     Server.new('vagrant01','10.10.1.10', '22', 'vagrant'),

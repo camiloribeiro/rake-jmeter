@@ -1,3 +1,4 @@
+require 'rubygems/package'
 namespace :sync do
 
   desc 'Sync all nodes'
@@ -11,10 +12,12 @@ namespace :sync do
 
   desc 'Download and extracts the last version of Jmeter with all the plugins needed'
   task :install do
-    http = Curl.get("http://camiloribeiro.github.io/jmeter.tgz")
+    puts "Downloading JMeter binaries from: #{@jmeter_binaries}" 
+    curl = Curl::Easy.new(@jmeter_binaries)
+    curl.perform
     puts "Download complete" 
+    
     puts "Extracting files" 
-
     Gem::Package::TarReader.new( Zlib::GzipReader.open "./jmeter.tgz") do |tar|
       destination = "./"
       dest = nil
@@ -38,5 +41,6 @@ namespace :sync do
         end
         dest = nil
       end
+    end
   end
 end
