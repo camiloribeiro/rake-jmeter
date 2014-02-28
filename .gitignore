@@ -6,3 +6,6 @@ jmeter.log
 logs/
 reports/
 .DS_Store
+jmeter/
+jmeter.tgz
+jmeter.log
