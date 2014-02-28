@@ -8,3 +8,4 @@ gem 'launchy'
 gem 'redis'
 gem 'groupdate'
 gem "chartkick"
+gem "curb"

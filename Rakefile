@@ -4,6 +4,7 @@ require "./config/config_helper"
 require "bundler/setup"
 require "csv"
 require 'launchy'
+require "curb"
 
 Bundler.require
 

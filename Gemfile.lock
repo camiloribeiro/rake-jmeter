@@ -22,6 +22,7 @@ GEM
     builder (3.1.4)
     chartkick (1.2.2)
     coderay (1.1.0)
+    curb (0.8.5)
     diff-lcs (1.2.5)
     groupdate (1.0.4)
       activerecord (>= 3.0.0)
@@ -56,6 +57,7 @@ PLATFORMS
 
 DEPENDENCIES
   chartkick
+  curb
   groupdate
   launchy
   pry
