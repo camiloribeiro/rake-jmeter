@@ -28,10 +28,10 @@ namespace :ssh do
 
   desc 'set up the master virtual machine'
   task :setup_master do
-    `ssh -C -p 22 vagrant@vagrant01 'echo "\nServerAliveInterval 300\nServerAliveCountMax 3" >> ~/.ssh/config'`
+    `ssh -C -p 22 #{MASTER.user}@#{MASTER.name} 'echo "\nServerAliveInterval 300\nServerAliveCountMax 3" >> ~/.ssh/config'`
     STRESS_SERVERS_INTERNAL.each do |server|
       puts "add #{server.name} information to Master"
-      `ssh -C -p 22 vagrant@vagrant01 'echo "\nHost #{server.name}\nHostName #{server.host}\nPort #{server.port}\nUser #{server.user}" >> ~/.ssh/config'`
+      `ssh -C -p 22 #{MASTER.user}@#{MASTER.name} 'echo "\nHost #{server.name}\nHostName #{server.host}\nPort #{server.port}\nUser #{server.user}" >> ~/.ssh/config'`
     end
   end
 end
