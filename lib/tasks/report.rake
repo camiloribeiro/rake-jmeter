@@ -1,4 +1,5 @@
 #encoding: UTF-8
+require 'date'
 REPORTS = %w[
   ThreadsStateOverTime
   ResponseTimesOverTime
@@ -11,6 +12,7 @@ REPORTS = %w[
 
 desc 'Generates a report from a JTL file'
 task :report, :jtl do |t, args|
+  @date = DateTime.now
   @pages = "" 
   jtl = File.expand_path(args.jtl)
   raise "#{jtl} does not exist" unless File.exists?(jtl)
@@ -37,6 +39,7 @@ end
 namespace :report do
 
   task :overTime do
+    add_expectation_data
     writeReportTime
   end
 
@@ -106,22 +109,25 @@ namespace :report do
     end
   end
 
-  def link_to_newrelic_server(account_id, id, tstamp)
-    start_time = tstamp.to_i
-    end_time = tstamp.to_i + (30 * 60)
-
-    "https://rpm.newrelic.com/accounts/#{account_id}/servers/#{id}?tw%5Bstart%5D=#{start_time}&tw%5Bend%5D=#{end_time}"
-  end
-
-  def link_to_newrelic_app(account_id, id, tstamp)
-    start_time = tstamp.to_i
-    end_time = tstamp.to_i + (30 * 60)
-
-    "https://rpm.newrelic.com/accounts/#{account_id}/applications/#{id}?tw%5Bstart%5D=#{start_time}&tw%5Bend%5D=#{end_time}"
+  def add_expectation_data
+      saveData("expectations", "Number of Requests", @min_samplers)
+      saveData("expectations", "Average Response Time", @max_standard_deviation)
+      saveData("expectations", "Median", @max_median)
+      saveData("expectations", "Standard Deviation", @max_standard_deviation)
+      saveData("expectations", "Percent Deviation", @max_percentile_deviation)
+      saveData("expectations", "Min Response Time", @max_min_time)
+      saveData("expectations", "90% Percentile", @max_90)
+      saveData("expectations", "Max Response Time", @max_max_time)
+      saveData("expectations", "Throughput", @min_throughput)
+      saveData("expectations", "Error Rating", @max_error_rate)
+      saveData("expectations", @percentile_1_label, @min_response_time_under_percentile_1 )
+      saveData("expectations", @percentile_2_label, @min_response_time_under_percentile_2 )
+      saveData("expectations", @percentile_3_label, @min_response_time_under_percentile_3 )
+      saveData("expectations", @percentile_4_label, @min_response_time_under_percentile_4 )
+      saveData("expectations", @percentile_5_label, @min_response_time_under_percentile_5 )
   end
 
   task 'summary', :out_dir do |t, args|
-    require 'date'
     require 'time'
     out_dir = args.out_dir
     raise "#{out_dir} does not exist!" unless File.exists?(out_dir)
@@ -152,8 +158,7 @@ MKD
       summary = agg.merge(percentiles_below_threshold.find {|pbt| pbt['Transaction'] == agg['sampler_label']} || {})
       summary['standard_deviation'] = st_deviation.find{|s| s['sampler_label'] == agg['sampler_label']}['standard_deviation_report_stddev'] || 0
 
-      @date = DateTime.now 
-      # redis.set("build:page:median_report_line", median_report_line)
+
       md << [
         summary['sampler_label'],
         aggregate_report_line(summary),
@@ -427,7 +432,7 @@ MKD
 
   def saveData(file, key, value)
     file = "#{file.gsub(/\s+/, "_")}"
-    @pages += ",#{file}"
+    @pages += ",#{file}" if file != "expectations"
     file = "./data/#{file}.csv"
     File.open(file, "r").each_line do |line|
       if(line =~ /^#{key}/)
@@ -451,8 +456,9 @@ MKD
 
       File.open("data/#{page_name}.csv", "r").each_line do |line|
         name = line.split("|")[0]
+        expectations = get_expected_line name
         data = line.slice(line.index("|")+1..-1)
-        page += addChart(name, data, page_name)
+        page += addChart(name, data, page_name, expectations)
       end
       page += '</div>' 
     end
@@ -461,7 +467,15 @@ MKD
     File.open("data/overTime.html", 'w') { |file| file.write(page)}
   end
 
-  def addChart(name, data, page_name)
+  def get_expected_line key
+    expected_line = ""
+    File.open("data/expectations.csv", "r").each_line do |line|
+      expected_line = line.slice(line.index("|")+1..-1) if line.split("|")[0] == key
+    end
+    expected_line
+  end
+
+  def addChart(name, data, page_name, expectations)
     require "chartkick"
     include Chartkick
     allTuples = ""
@@ -469,8 +483,16 @@ MKD
     fragment << "<div id='#{page_name}_#{name}' style='height: 300px; text-align: center; color: #999; line-height: 300px; font-size: 14px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif;'>"
     fragment << "Loading..."
     fragment << "</div><script type='text/javascript'>"
-    fragment << "new Chartkick.LineChart('#{page_name}_#{name}',[ {'name':'#{page_name}_#{name}', 'data':{ "
+    fragment << "new Chartkick.LineChart('#{page_name}_#{name}',[ {'name':'Real', 'data':{ "
     arr = data.split("|").each do |row| 
+      tuple = row.split(":")
+      tuple = [tuple[0], tuple[1].to_i].to_a
+      allTuples = tuple if allTuples.nil?
+      [allTuples,tuple].to_a
+    end
+    fragment << arr.join(",")
+    fragment << "}}, {'name':'Expected', 'data':{ "
+    arr = expectations.split("|").each do |row| 
       tuple = row.split(":")
       tuple = [tuple[0], tuple[1].to_i].to_a
       allTuples = tuple if allTuples.nil?
