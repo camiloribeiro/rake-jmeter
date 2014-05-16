@@ -1,4 +1,4 @@
--bundle install
+bundle install
 rake sync:install
 vagrant box add quantal64 https://github.com/downloads/roderik/VagrantQuantal64Box/quantal64.box
 vagrant destroy vagrant01 -f
