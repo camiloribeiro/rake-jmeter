@@ -1,6 +1,14 @@
 Rake-JMeter ლ(ಠ_ಠლ)
 ===========
 
+This project is deprecated :(
+----
+
+This was a very helpfull and usefull (yet workarounded) way of running distributed performance tests in JMeter using ruby to go across many different machines in a cloud or on-premise cluster. Nowadays much newer technology is in place, such as docker for distribution and other better performance testing tools are out there too, like Gatling (http://gatling.io) and locust (http://locust.io/).
+
+Info
+----
+
 Tasks to handle JMeter test execution
 
 It's a very simple, very rough automation framework using JMeter. Right now, it:
